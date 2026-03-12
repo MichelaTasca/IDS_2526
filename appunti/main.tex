@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper,oneside]{book}
-\input{config.tex}
+\input{config/config}
 
 \title{Ingegneria del Software}
 \author{Michela Maria Tasca \\ \small Prof. Calvagna --- UniCt}
@@ -17,7 +17,7 @@
 Nello sviluppo del software, l'assenza di principi ingegneristici porta a fallimenti visibili e costosi. Un esempio classico è l'immagine di un \textbf{billboard del mago Lance Burton, interrotto da una finestra di dialogo di errore di Windows} . 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{cartellone.png}
+    \includegraphics[width=0.8\textwidth]{figures/cartellone.png}
     \label{fig:nome_riferimento}
 \end{figure}
 
@@ -38,7 +38,7 @@ Il termine \textit{Software Engineering} è nato nel 1968 durante la Conferenza 
 Una figura chiave è stata \textbf{Margaret Hamilton}, ritratta accanto a una \textbf{pila di codici stampati su carta alta quanto lei}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{image.png}
+    \includegraphics[width=0.5\linewidth]{figures/image.png}
     \label{fig:placeholder}
 \end{figure}
 La foto mostra il codice sorgente del software di volo delle missioni Apollo (Apollo Guidance Computer). La Hamilton ha coniato il termine "Ingegneria del Software" lottando affinché lo sviluppo del codice ricevesse lo stesso rispetto, legittimità e rigore metodologico riservato all'hardware, permettendo all'umanità di arrivare sulla Luna senza crash di sistema critici.
@@ -72,7 +72,7 @@ Le attività generiche in tutti i processi software sono:
 \subsubsection{Il Modello a Cascata (Waterfall Model)}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{waterfall.png}
+    \includegraphics[width=0.5\linewidth]{figures/waterfall.png}
     \label{fig:placeholder}
 \end{figure}
 Il diagramma del ciclo di vita classico mostra un flusso sequenziale in cui ogni fase produce gli artefatti necessari per la successiva:
@@ -87,7 +87,7 @@ Il diagramma del ciclo di vita classico mostra un flusso sequenziale in cui ogni
 \subsubsection{Il Processo di Sviluppo (Enhanced Model)}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{imm.png}
+    \includegraphics[width=0.75\linewidth]{figures/imm.png}
     \label{fig:placeholder}
 \end{figure}
 Il diagramma del modello esteso illustra un approccio più iterativo e basato su concetti moderni:
@@ -104,7 +104,7 @@ Il diagramma del modello esteso illustra un approccio più iterativo e basato su
 Il processo e il prodotto sono influenzati da diverse forze (Drivers) interconnesse:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{process.png}
+    \includegraphics[width=0.5\linewidth]{figures/process.png}
     \label{fig:placeholder}
 \end{figure}
 \begin{itemize}
@@ -181,14 +181,14 @@ Di seguito due schemi che mettono a confronto i processi di compilazione ed esec
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{esecuzioneC.png}
+        \includegraphics[width=\textwidth]{figures/esecuzioneC.png}
         \caption{C/C++ Program Environment}
         \label{fig:img_C}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{esecuzionejava.png}
+        \includegraphics[width=\textwidth]{figures/esecuzionejava.png}
         \caption{Java Program Environment}
         \label{fig:img_J}
     \end{subfigure}
@@ -258,7 +258,7 @@ Nelle slide viene analizzato il classico esempio "Hello World" con l'ausilio di 
 Nella progettazione software, i Class Diagram UML modellano la \textbf{struttura statica} di un sistema, definendo le entità, i loro attributi (stato) e metodi (comportamento). Di seguito il diagramma UML della classe \texttt{HelloWorld}:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.35\linewidth]{Hello.png}
+    \includegraphics[width=0.35\linewidth]{figures/Hello.png}
     \caption{"Hello World" UML Diagram}
     \label{fig:placeholder}
 \end{figure}
@@ -390,8 +390,465 @@ public class ScannerDemo {
 L'ingegneria del software richiede sistemi robusti e fault-tolerant. Se un utente inserisce un dato incompatibile (es. digita "dieci" quando è atteso un \texttt{int} tramite \texttt{nextInt()}), l'esecuzione non causa un crash di sistema irreversibile o un core dump (come avviene spesso in C), ma la JVM solleva una \textbf{Eccezione} (in questo caso, \texttt{InputMismatchException}). Le eccezioni sono oggetti che rappresentano un'anomalia a run-time e che possono essere "catturate" e gestite (\textit{caught and handled}) all'interno del codice per permettere al programma di riprendersi dall'errore gracefully.
 
 
+\chapter{Modellazione Object-Oriented con UML}
+\section{Introduzione}
+La modellazione del software è diventata una necessità imprescindibile a causa della crescente complessità dei sistemi moderni. Ad esempio, sistemi operativi come Windows superano i 40 milioni di righe di codice, una quantità impossibile da gestire integralmente per un singolo programmatore. Il codice sorgente, inoltre, non è uno strumento di comunicazione efficace per chi non lo ha scritto.
 
+\subsection{Gestione della Complessità}
+Il \textbf{Object-Oriented Design (OOD)} fornisce tre strumenti fondamentali per gestire la complessità:
+\begin{enumerate}
+    \item \textbf{Astrazione}: Capacità di ignorare i dettagli non essenziali per concentrarsi sugli aspetti rilevanti. Questo risponde al limite umano di gestire solo $7 \pm 2$ concetti simultaneamente (fenomeno del chunking).
+    \item \textbf{Decomposizione}: Suddivisione di un problema complesso in parti più piccole e gestibili.
+    \item \textbf{Gerarchia}: Organizzazione delle astrazioni in strutture ordinate.
+\end{enumerate}
 
+\section{Sistemi, Modelli e Viste}
+\begin{definition}{Modello}{}
+    Un \textbf{modello} è un'astrazione che descrive un sottoinsieme di un sistema.
+\end{definition}
+\begin{definition}{Vista}{}
+    Una \textbf{vista} raffigura determinati aspetti del modello
+\end{definition}
+\begin{definition}{Notazione}{}
+    Una \textbf{notazione} è un set di regole grafiche o testuali per raffigurare le viste
+\end{definition}
+\textbf{Esempio Pratico: Aeromobile}\\
+Per comprendere meglio la gerarchia tra sistema, modelli e viste, si consideri il caso di un aeromobile:
+\begin{itemize}
+    \item \textbf{Sistema}: L'aeromobile fisico nella sua interezza.
+    \item \textbf{Modelli}: Rappresentazioni come il simulatore di volo o un modello in scala.
+    \item \textbf{Viste}: Dettagli specifici del modello, come i progetti tecnici (blueprints), lo schema del cablaggio elettrico o il sistema di alimentazione del carburante.
+\end{itemize}
+ La validità di un modello è determinata dal mapping tra la realtà ($R$) e le astrazioni nel modello ($M$): le relazioni valide nella realtà devono riflettersi correttamente nel modello.
 
+\subsection{Tipologie di Modelli}
+\begin{itemize}
+    \item \textbf{Modello Funzionale}: Descrive le funzionalità del sistema e il flusso dei dati.
+    \item \textbf{Modello Oggetto (Strutturale)}: Descrive la struttura del sistema, gli oggetti e le loro relazioni.
+    \item \textbf{Modello Dinamico (Comportamentale)}: Descrive come il sistema reagisce agli eventi esterni.
+\end{itemize}
+\section{UML e le 4+1 Viste}
+Tra la fine degli anni '80 e l'inizio degli anni '90, sono emerse numerose metodologie orientate agli oggetti, ciascuna con le proprie notazioni e i propri processi di sviluppo. Gli approcci più rilevanti (Booch, Rumbaugh e Jacobson) sono stati unificati nell'UML (Unified Modeling Language).
+
+L'UML è un formalismo di modellazione standardizzato dall'OMG (Object Management Group) che racchiude diversi linguaggi e permette di costruire modelli per l'analisi, il progetto e l'implementazione.
+Dal punto di vista architetturale, UML definisce 4+1 viste fondamentali:
+\begin{itemize}
+    \item \textbf{Use Case View} (Vista dei casi d'uso) [cite: 89]
+    \item \textbf{Logical/Design View} (Classi, interfacce, collaborazioni)
+    \item \textbf{Process View} (Vista dei processi) [cite: 90]
+    \item \textbf{Component/Implementation View} (Componenti fisici del software)
+    \item \textbf{Deployment View} (Distribuzione del software sull'hardware)
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/viste.png}
+    \caption{4+1 viste}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Elicitazione dei Requisiti}
+
+L'\textbf{elicitazione dei requisiti} è un'attività complessa e critica che richiede la stretta collaborazione tra professionisti con competenze eterogenee: \textbf{utenti }(detentori della conoscenza del dominio applicativo) e \textbf{sviluppatori} (esperti del dominio della soluzione, del design e dell'implementazione).
+
+Per colmare la lacuna comunicativa tra utenti e sviluppatori si introducono due strumenti chiave:
+\begin{itemize}
+    \item \textbf{Scenari}: Rappresentano esempi concreti di utilizzo del sistema, descritti come una serie di interazioni passo-passo tra l'utente e il sistema stesso.
+    \item \textbf{Casi d'uso (Use Cases)}: Costituiscono un'astrazione che raggruppa e descrive un'intera classe di scenari correlati. Rappresentano le funzionalità tangibili offerte all'utente dal sistema.
+\end{itemize}
+
+\section{Diagramma dei Casi d'Uso - Modellazione funzionale}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/usecase1.png}
+    \caption{Use case diagram: Functional modelling}
+    \label{fig:placeholder}
+\end{figure}
+È il diagramma dedicato alla modellazione funzionale del sistema. Gli elementi principali sono:
+\begin{itemize}
+    \item \textbf{Attore}: Modella un'entità esterna che comunica direttamente con il sistema. Può essere un utente umano, un sistema esterno o l'ambiente fisico (es. un sensore).
+    \item \textbf{Caso d'Uso}: L'azione o la funzione messa a disposizione.
+    \item \textbf{System Boundary}: I confini del sistema che racchiudono i casi d'uso, separandoli dagli attori esterni.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/diagrammacasiduso.png}
+    \caption{Esempio di diagramma di caso d'uso}
+    \label{fig:placeholder}
+\end{figure}
+I casi d'uso possono essere correlati tra loro tramite specifiche relazioni:
+\begin{itemize}
+    \item \textbf{\textless\textless include\textgreater\textgreater}: Indica che il comportamento del caso d'uso incluso è obbligatorio e viene richiamato all'interno del caso d'uso base.
+    \item \textbf{\textless\textless extend\textgreater\textgreater}: Specifica che un caso d'uso base può essere opzionalmente esteso con ulteriori comportamenti, generalmente al verificarsi di determinate condizioni.
+\end{itemize}
+
+\section{Il Progetto Software Orientato agli Oggetti}
+
+Il modello derivante dalla fase di analisi funge da base per la definizione dell'architettura software. Nelle fasi inziali, l'architettura ricalca fedelmente il \textbf{modello di analisi}. 
+La fase di progettazione vera e propria \textbf{estende} le classi trovate in fase di analisi, integrandole con classi derivanti dalla progettazione del sistema e inerenti al dominio dell'implementazione (es. database, interfacce utente). 
+Questa struttura viene poi rielaborata, introducendo nuove classi, espandendo i concetti in moduli complessi e definendo accuratamente le interfacce per preparare il codice.
+
+\subsection{Obiettivi Architetturali}
+La progettazione copre due livelli architetturali:
+\begin{enumerate}
+    \item \textbf{Architettura logica del software}: Include la definizione di moduli, sottosistemi, componenti e moduli unitari. Definisce inoltre le relazioni formali tra essi: associazioni, generalizzazioni, dipendenze e collaborazioni.
+    \item \textbf{Architettura fisica}: Riguarda l'organizzazione dei file eseguibili, delle librerie e dei dati, unitamente all'architettura hardware (nodi computazionali e ambienti di esecuzione).
+\end{enumerate}
+
+\subsection{Tipologie di Diagrammi UML}
+I diagrammi UML si dividono in due macrocategorie[cite: 217]:
+\begin{itemize}
+    \item \textbf{Diagrammi Strutturali (Structure Diagram)}: Mostrano l'architettura statica. Includono: Class diagram, Component diagram, Composite structure diagram, Deployment diagram, Object diagram, Package diagram.
+    \item \textbf{Diagrammi Comportamentali (Behavior Diagram)}: Mostrano l'evoluzione dinamica. Includono: Activity diagram, Use case diagram, State machine diagram, Interaction diagram (Sequence, Communication, Interaction overview, Timing diagram).
+\end{itemize}
+
+\section{Diagramma delle Classi e degli Oggetti}
+
+\subsection{Attributi e Operazioni}
+La sintassi formale per dichiarare un attributo in un diagramma delle classi è: \\
+\begin{center}
+    \texttt{<visibilità> <nome> [<molteplicità>] : <tipo> = <valore-iniziale>}
+\end{center}
+
+La visibilità definisce il livello di incapsulamento ed è rappresentata dai simboli:
+\begin{itemize}
+    \item \texttt{+} pubblica (public)
+    \item \texttt{\#} protetta (protected)
+    \item \texttt{\textasciitilde} package (visibilità di default in Java)
+    \item \texttt{-} privata (private)
+\end{itemize}
+
+La molteplicità, indicata tra parentesi quadre, definisce \textbf{quanti valori} può assumere l'attributo: es. \texttt{[3]} (esattamente tre), \texttt{[1..4]} (da uno a quattro), \texttt{[1..*]} (uno o più), \texttt{[0..1]} (attributo opzionale).
+Se un attributo possiede uno scope statico, il suo nome viene sottolineato nel diagramma.
+
+La sintassi per definire un'\textit{operazione} (\textbf{metodo}) è:
+\begin{center}
+    \texttt{<visibilità> <nome> (<lista-parametri>) : <tipo-restituito>}
+\end{center}
+
+Il nome e la lista dei parametri costituiscono la \textbf{segnatura} dell'operazione. I parametri si specificano tramite:
+\begin{center}
+    \texttt{<direzione> <nome> : <tipo> = <valore-default>}
+\end{center}
+dove la direzione può essere \texttt{in} (ingresso), \texttt{out} (uscita) o \texttt{inout} (ingresso e uscita). Il valore di default viene utilizzato se non viene passato alcun argomento al metodo in fase di invocazione.
+
+\subsection{Oggetti}
+Mentre i diagrammi di classe modellano le regole generali, gli oggetti si usano per \textbf{esemplificare} situazioni particolari o stati specifici. Nel diagramma degli oggetti, il nome dell'oggetto e la sua classe vengono scritti sottolineati e separati dai due punti (es. \underline{\texttt{oggetto:Classe}} oppure semplicemente \underline{\texttt{:Classe}} se anonimo) e si assegnano valori concreti ai rispettivi attributi.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/oggetti.png}
+    \caption{Esempio: Oggetti}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Associazioni e Progettazione delle Relazioni}
+Le associazioni descrivono i collegamenti tra le classi. Un'associazione binaria è definita dai suoi estremi (\textit{end}), ciascuno dei quali specifica:
+\begin{itemize}
+    \item Nome della classe
+    \item Ruolo della classe all'interno dell'associazione 
+    \item Molteplicità (numero di istanze associabili)
+    \item Navigabilità (presenza di puntatori per attraversare la relazione)
+\end{itemize}
+
+In fase di progettazione, le associazioni si implementano nel codice object-oriented secondo i seguenti pattern:
+\begin{itemize}
+    \item \textbf{Uno a Uno (1 a 1)}: Si implementa tramite un semplice puntatore (riferimento a oggetto) se la navigazione è monodirezionale, o con due puntatori (uno in ciascuna classe) se bidirezionale.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{figures/unoauno.png}
+        \caption{Uno a uno}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Uno a Molti (1 a *) }: Viene implementata utilizzando una classe contenitore. È importante basare la scelta del contenitore sull'eventuale ordinamento richiesto e sulle modalità di accesso ai dati (ad esempio, l'utilizzo di iteratori). In Java, si sfrutta un'interfaccia o una classe del framework \textit{Collections}, inserendo una lista (es. \texttt{List<Account>}) all'interno dell'entità principale.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{figures/unoamolti.png}
+        \caption{Uno a molti}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Molti a Molti (* a *)}: La relazione deve essere risolta implementando una classe intermedia che scompone l'associazione originaria in due associazioni del tipo "uno a molti". Questa classe conterrà riferimenti alle istanze delle classi collegate.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{figures/molamol.png}
+        \caption{Molti a molti}
+        \label{fig:placeholder}
+    \end{figure}
+\end{itemize}
+
+\subsection{Associazioni Qualificate}
+Un'associazione qualificata si avvale di un \textbf{qualificatore}, ovvero un attributo specifico dell'associazione che viene utilizzato come "\textit{chiave}" per individuare univocamente un singolo oggetto all'interno di una vasta collezione di oggetti collegati. (Es. In un dizionario, la stringa della parola agisce da qualificatore per recuperare il valore).
+
+\subsection{Relazioni Speciali}
+\begin{itemize}
+    \item \textbf{Dipendenza}: \textbf{Si ha quando una classe dipende in modo lasco da un'altra}. Si verifica tipicamente se un'operazione della classe prende l'altra come parametro, ne restituisce un'istanza, o crea dinamicamente un suo oggetto locale che non è salvato come attributo di stato.
+    \item \textbf{Aggregazione}: \textbf{Esprime il concetto di appartenenza a un gruppo} (relazione \textit{whole/part}). È un'associazione "debole" in quanto le parti componenti possono esistere in modo del tutto indipendente al di fuori dell'entità composta (es. una squadra e i suoi giocatori, una biblioteca e i libri).\\
+    Si disegna con un rombo vuoto adiacente alla classe contenitore. Un'istanza di una classe può partecipare simultaneamente a più di un'aggregazione.
+    \item \textbf{Composizione}: È una versione molto più stringente dell'aggregazione. Modella una \textbf{subordinazione strutturale rigida}, in cui l'esistenza delle parti è strettamente legata e dipendente dal contenitore (es. il motore di un'automobile).\\ Si rappresenta tramite un rombo pieno. Un'istanza componente può partecipare a una e una sola composizione.
+    \item \textbf{Generalizzazione (Ereditarietà)}: È una \textbf{relazione strutturale} (non un'associazione) che indica che una classe (sottoclasse) è una specializzazione o un sottoinsieme di un'altra (classe base).
+    L'affermazione "\textit{A generalizza B}" o "\textit{B specializza A}" equivale a dire che ogni istanza di B è di fatto un'istanza di A (inclusione logica di insiemi). Su di essa si poggia il \textbf{principio di sostituzione di B. Liskov}, secondo il quale \textit{un'istanza della classe derivata deve poter sempre sostituire un'istanza della classe base garantendo il corretto funzionamento del software}. 
+\end{itemize}
+
+Le classi coinvolte nelle generalizzazioni si dividono in classi \begin{itemize}
+    \item\textbf{concrete}:se possono essere \textbf{direttamente} istanziate
+    \item\textbf{astratte}: se dichiarano comportamenti ma non possono avere istanze dirette; in UML il nome è in corsivo.
+\end{itemize} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/generalizzazione.png}
+    \caption{Generalizzazione: classi astratte e concrete}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Esempio di Diagram Class}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/example_diagram.png}
+    \caption{Esempio di Diagram Class}
+    \label{fig:placeholder}
+\end{figure}
+Durante la transizione verso il progetto OO di dettaglio, i modelli devono essere affinati per la scrittura del codice. Il software engineer deve:
+\begin{itemize}
+    \item Scomporre le classi e i moduli troppo complessi in entità più semplici ed adese (Single Responsibility Principle).
+    \item Specificare completamente i contratti per attributi e operazioni, dettagliando tipi di dato, direzioni dei parametri, visibilità e modificabilità.
+    \item Inserire operazioni essenziali che sono implicite a livello di modello astratto ma necessarie in fase implementativa, come costruttori, distruttori e metodi \textit{getter/setter}.
+    \item Definire eventuali operazioni e interfacce ausiliarie richieste dall'infrastruttura sottostante.
+\end{itemize}
+
+\section{Modellazione Comportamentale in UML}
+L'UML offre diversi formalismi per modellare il comportamento dinamico di un sistema orientato agli oggetti. I principali diagrammi comportamentali sono:
+\begin{itemize}
+    \item Macchine a Stati (\textbf{State Machines})
+    \item Diagrammi di Attività (\textbf{Activities})
+    \item Diagrammi di Interazione (\textbf{Interactions})
+\end{itemize}
+
+\section{Diagrammi di Stato (State Machines)}
+Le macchine a stati descrivono come un oggetto o un sottosistema risponde agli eventi nel corso del suo ciclo di vita.
+\begin{itemize}
+    \item Rappresentano un'estensione degli automi a stati finiti.
+    \item Il linguaggio utilizzato in UML deriva direttamente dal formalismo degli \textbf{Statecharts} introdotto da David Harel.
+    \item Possono essere associate a una singola classe, a una collaborazione (interazione di un insieme di oggetti) o all'esecuzione di un metodo specifico.
+\end{itemize}
+
+\subsection{Elementi Fondamentali}
+\begin{itemize}
+    \item \textbf{Stato}: Descrive un intervallo di tempo durante la vita di un oggetto. È caratterizzato dai valori assunti dall'oggetto, dall'attesa del verificarsi di certi eventi o dall'esecuzione di specifiche attività.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/stato.png}
+        \caption{Esempio di Stato}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Occorrenza ed Evento}: Un'occorrenza è associata a un istante nel tempo e (spesso implicitamente) a un punto nello spazio, come la singola pressione di un tasto. Un \textbf{evento} definisce l'insieme di occorrenze di uno stesso tipo. Spesso i due termini vengono usati come sinonimi.
+    \item \textbf{Transizione}: Modella il passaggio istantaneo da uno stato all'altro in conseguenza al verificarsi di un evento. Permette di lasciare uno stato in risposta a un trigger. \textbf{Nota bene:} Un oggetto gestisce un solo evento alla volta.
+    \item \textbf{Attività}: Possono essere associate agli stati o alle transizioni. Le attività associate agli stati hanno una durata non nulla e possono essere interrotte da eventi che causano l'uscita dallo stato. Le attività associate alle transizioni (\textbf{azioni}) non sono interrompibili e sono considerate istantanee.
+\end{itemize}
+
+\subsection{Sintassi delle Transizioni e Tipi di Eventi}
+Le transizioni sono annotate con la seguente sintassi, dove tutti gli elementi sono facoltativi:
+\begin{center}
+    \texttt{<evento> [<condizione\_di\_guardia>] / <azione>}
+\end{center}
+\begin{itemize}
+    \item \textbf{Trigger (Evento di inizio)}: L'evento che innesca la transizione. Può essere la ricezione di chiamate di operazione o segnali.
+    \item \textbf{Condizione di guardia (Guard)}: Espressione booleana racchiusa tra parentesi quadre. È valutata al momento dell'evento; la transizione avviene \textbf{solo} se è valutata a \texttt{true}.
+    \item \textbf{Azione (Action)}: Attività eseguita istantaneamente durante la transizione verso lo stato target.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/behavoir.png}
+    \caption{Diagramma di Stato}
+    \label{fig:placeholder}
+\end{figure}
+Oltre agli eventi di ricezione, UML supporta:
+\begin{itemize}
+    \item \textbf{Eventi di cambiamento (Change Events)}: Scattano quando una condizione logica diventa vera, indicati con \texttt{when(...)} (es. \texttt{when(t > t\_max)}).
+    \item \textbf{Eventi temporali}: Possono essere assoluti (es. \texttt{at(time=2026-3-1 00:00)}) o relativi all'istante in cui lo stato è diventato attivo (es. \texttt{after(20 s)}).
+    \item \textbf{Eventi di completamento}: Generati automaticamente al termine dell'attività interna di uno stato.
+\end{itemize}
+
+\subsection{Azioni Interne agli Stati}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/azionientry.png}
+    \caption{Azioni di \textit{entry} e \textit{exit}}
+    \label{fig:placeholder}
+\end{figure}
+All'interno di uno stato, possono essere definite azioni specifiche:
+\begin{itemize}
+    \item \textbf{\texttt{entry/}}: Azioni eseguite immediatamente all'ingresso nello stato.
+    \item \textbf{\texttt{exit/}}: Azioni eseguite immediatamente prima di uscire dallo stato.
+    \item \textbf{\texttt{do/}}: Attività in esecuzione mentre ci si trova in un determinato stato (può essere un ciclo continuo, es. \texttt{do/ get caratteri}).
+\end{itemize}
+
+\subsection{Macchine a Stati Gerarchiche e Concorrenti}
+In UML, le macchine a stati possono essere modellate gerarchicamente per gestire la complessità. Il comportamento di un \textbf{superstato} può essere dettagliato attraverso un insieme di sottostati.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/sottostati.png}
+    \caption{Stati composti}
+    \label{fig:placeholder}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Sottostati Sequenziali}: All'interno del superstato, vi è un solo stato attivo alla volta.
+    \item \textbf{Ereditarietà delle transizioni}: I sottostati ereditano le transizioni in uscita definite a livello del superstato. Ad esempio, in un sistema telefonico, se il superstato "Attivo" ha una transizione verso "Inattivo" scatenata dall'evento "sconnessione", tutti i sottostati (Attesa, Conversazione, ecc.) risponderanno a quell'evento passando a "Inattivo".
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/telefono.png}
+        \caption{Macchina a Stati gerarchica}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Regioni Concorrenti}: I sottostati possono essere concorrenti, ovvero due o più stati possono essere attivi contemporaneamente in partizioni ortogonali del sistema (es. in un dispositivo "Operation", i sottosistemi per la velocità e la temperatura evolvono in modo parallelo). 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/concorrenti.png}
+        \caption{Macchina a Regioni concorrenti}
+        \label{fig:placeholder}
+    \end{figure}
+    Le transizioni concorrenti utilizzano \textbf{fork} (diramazione) e \textbf{join} (sincronizzazione) per gestire l'attivazione e la terminazione dei thread paralleli.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/forkjoin.png}
+        \caption{Enter Caption}
+        \label{fig:placeholder}
+    \end{figure}
+\end{itemize}
+
+\section{Diagrammi di Attività}
+I diagrammi di attività servono a descrivere il flusso di controllo e di informazioni all'interno dei processi.
+Nella loro forma più semplice, sono concettualmente molto simili ai tradizionali diagrammi di flusso (flowchart).
+
+\begin{itemize}
+    \item \textbf{Nel modello di analisi}: Descrivono i processi del dominio applicativo, come la gestione aziendale o l'elaborazione di ordini e pagamenti.
+    \item \textbf{Nel modello di progetto}: Descrivono flussi algoritmici complessi o l'implementazione logica delle singole operazioni.
+    \item Costituiscono il punto iniziale della progettazione. Tuttavia, i diagrammi di base non esplicitano l'oggetto responsabile di una data attività; devono quindi essere ri-elaborati per l'assegnazione delle responsabilità alle classi.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pagamento.png}
+    \caption{Diagramma per pagamento}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Struttura e Corsie (Swimlanes)}
+Per modellare l'assegnazione delle responsabilità nel processo, si utilizzano le \textbf{Corsie (Swimlanes)}.
+\begin{itemize}
+    \item \textbf{Corsie}: Partizioni verticali o orizzontali che indicano l'attore, l'oggetto o il modulo responsabile di uno specifico sottoinsieme di attività (es. Cliente, Vendite, Magazzino).
+    \item \textbf{Flusso di Oggetti}: I dati o gli oggetti di dominio utilizzati o prodotti dalle attività sono rappresentati come rettangoli. Le frecce tratteggiate indicano l'input o l'output di tali oggetti verso o da un'attività.
+    \item \textbf{Ramificazione e Sincronizzazione}: Vengono utilizzati \textbf{nodi di decisione} per i thread alternativi e \textbf{barre di sincronizzazione (fork/join)} per la gestione dell'esecuzione parallela. Il nodo di \textbf{merge} ricongiunge percorsi mutuamente esclusivi.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/corsie.png}
+    \caption{Diagramma attività con Corsie}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Diagrammi di Interazione}
+L'UML descrive come gli oggetti collaborano scambiandosi messaggi attraverso i Diagrammi di Interazione, che comprendono i \textbf{Diagrammi di Collaborazione} (Comunicazione) e i \textbf{Diagrammi di Sequenza}.
+
+\subsection{Diagrammi di Collaborazione (Comunicazione)}
+Questi diagrammi mettono in evidenza la \textbf{struttura spaziale e topologica} di un'interazione.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/interazione.png}
+    \caption{Diagramma di collaborazione}
+    \label{fig:placeholder}
+\end{figure}
+\begin{itemize}
+    \item Mostrano esplicitamente i legami e le associazioni fra le istanze che partecipano allo scenario.
+    \item Il flusso dei messaggi è rappresentato da frecce poste parallelamente alle linee di associazione tra gli oggetti.
+    \item L'ordinamento temporale è indicato in modo esplicito attraverso un sistema di \textbf{numerazione sequenziale} sulle etichette dei messaggi (es. \texttt{1: getNome()}, \texttt{2: getName()}).
+    \item Le etichette dei messaggi possono includere il metodo chiamato ed eventuali valori di ritorno.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/collexample.png}
+    \caption{Esempio di diagramma di Collaborazione}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Diagrammi di Sequenza}
+A differenza dei diagrammi di collaborazione, i diagrammi di sequenza privilegiano la visualizzazione della \textbf{successione temporale} dei messaggi scambiati tra le "linee di vita" degli oggetti nel tempo (asse verticale).
+\begin{itemize}
+    \item Rappresentano scenari specifici e limitati, ovvero possibili istanze singole del comportamento di un sistema interagente.
+    \item A differenza dei diagrammi di stato (che descrivono \textbf{tutte} le possibili evoluzioni di un \textbf{singolo} oggetto), un diagramma di sequenza fissa uno specifico scenario (es. lo scenario in cui viene raggiunto il timeout prima del limite di temperatura).
+\end{itemize}
+
+\subsubsection{Mappatura codice Java / Diagrammi UML}
+Il formalismo UML mappa in modo diretto le operazioni della programmazione a oggetti (es. Java):
+\begin{enumerate}
+    \item \textbf{Creazione di un'istanza}:
+    L'istruzione Java \texttt{Studente s = new Studente();} corrisponde a un messaggio con etichetta \texttt{create} indirizzato all'intestazione della nuova istanza \texttt{s:Studente}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/istanza.png}
+        \caption{Creazione di un'istanza}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Chiamata di metodo}:
+    L'istruzione Java \texttt{s.setNome("Alan", "Rossi");} corrisponde a una freccia orientata verso la linea di vita dell'oggetto \texttt{s:Studente}, con etichetta \texttt{setNome()}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/metodo.png}
+        \caption{Chiamata di metodo su un'istanza}
+        \label{fig:placeholder}
+    \end{figure}
+    \item \textbf{Chiamate a cascata}:
+    Se l'esecuzione di un metodo ne evoca un altro internamente (es. per istanziare un altro oggetto collegato, come un \texttt{Esame}), si modelleranno chiamate ricorsive o a catena, rappresentando le frecce in sequenza temporale discendente.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/cascata.png}
+        \caption{Chiamata di metodo a cascata}
+        \label{fig:placeholder}
+    \end{figure}
+\end{enumerate}
+È bene osservare che ciascun diagramma di sequenza rappresenta
+esplicitamente una o piú istanze delle possibili sequenze di messaggi, mentre un diagramma di stato definisce implicitamente tutte le possibili sequenze di messaggi ricevuti (eventi) o inviati (azioni send) da un oggetto interagente con altri.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/scenario1.png}
+    \caption{Scenario 1: l'heater raggiunge la temperatura limite prima del timeout o dell'interruzione manuale}
+    \label{fig:placeholder}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/scenario2.png}
+    \caption{
+        Scenario 2: il timeout avviene prima che l'heater raggiunga la temperatura limite}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/stair.png}
+        \caption{Stair Diagram}
+        \label{fig:img1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/fork.png}
+        \caption{Fork Diagram}
+        \label{fig:img2}
+    \end{subfigure}
+    \caption{Tipologie di Diagrammi}
+    \label{fig:due_immagini}
+\end{figure}
+\subsubsection{Frammenti e Flussi di Controllo}
+Per rappresentare logica di controllo complessa all'interno dei diagrammi di sequenza, UML utilizza il concetto di \textbf{frammento d'interazione}. Ogni frammento è delimitato da un rettangolo e contrassegnato da una parola chiave in alto a sinistra:
+\begin{itemize}
+    \item \textbf{\texttt{opt}} (Optional): Segnala una sequenza eseguita condizionalmente, solo se una definita clausola di guardia è soddisfatta.
+    \item \textbf{\texttt{loop}} (Ciclo): Definisce una sequenza ripetuta un numero specificato o indeterminato di volte, finché sussiste una condizione logica specificata nell'intestazione.
+    \item \textbf{\texttt{par}} (Parallel): Delimita regioni distinte contenenti sequenze di messaggi che vengono eseguite interamente in parallelo tra loro.
+    \item \textbf{\texttt{critical}}: Delimita una porzione di sequenza atomica e non interrompibile, garantendo la mutua esclusione.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/flussidicontrollo.png}
+    \caption{Esempio di flussi di controllo nei diagrammi di sequenza}
+    \label{fig:placeholder}
+\end{figure}
 
 \end{document}
